@@ -1,0 +1,7 @@
+https://lightrun.com/solutions/tiangolo-fastapi-how-to-use-pydantic-and-sqlalchemy-models-with-relationship/
+
+https://www.geeksforgeeks.org/partial-json-update-using-sqlalchemy-expression/
+
+
+#for feild convertion
+https://gist.github.com/la-mar/439bb675ea84a2bac308de1e35c37fa5
