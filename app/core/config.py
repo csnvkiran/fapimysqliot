@@ -8,8 +8,8 @@ class Settings(BaseSettings):
 
     PROJECT_NAME: Optional[str] = "Klea iot APIs"
     API_STR: Optional[str] = "/api"
-    mysql_user: str = "kleaiot"
-    mysql_password: str = "Sai1Ram2"
+    mysql_user: str 
+    mysql_password: str 
     mysql_host: str = "192.168.68.111"
     mysql_port: str = "4406"
     mysql_database: str = "dbkleaiot"
