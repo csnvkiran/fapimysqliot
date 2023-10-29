@@ -5,5 +5,5 @@ pydantic-settings
 python-dotenv
 pymysql
 cryptography
-GeoAlchemy
+geoalchemy2
 shapely
