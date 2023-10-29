@@ -17,3 +17,5 @@ app = FastAPI(
 logging.info("starting service")
 
 app.include_router(apis.api_router, prefix=settings.API_STR)
+
+#app.mount("/kleaiot", app)
