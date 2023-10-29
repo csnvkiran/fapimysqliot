@@ -4,6 +4,7 @@ from sqlalchemy.types import String, Integer, Enum, DateTime
 from sqlalchemy.dialects.mysql import JSON
 from app.core.database import Base
 from geoalchemy2 import Geometry
+from sqlalchemy.sql import func
 
 
 class iotSensorData(Base):
@@ -15,5 +16,5 @@ class iotSensorData(Base):
     # sensor_location = Column(Geometry('POINT'))
     sensor_data = Column(JSON)
     created_user = Column(String)
-    created_date = Column(DateTime)
+    created_date = Column(DateTime, default=func.current_timestamp())
     # updated_user = Column(String)
