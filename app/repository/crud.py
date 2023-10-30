@@ -32,15 +32,15 @@ class crud_repository:
         return new_entity
 
     # Function to update details of the car
-    def update_entity(self, session: Session, _code: str, info_update):
-        curentity = self.get_entity_by_code(session, _code)
+    # def update_entity(self, session: Session, _code: str, info_update):
+    #     curentity = self.get_entity_by_code(session, _code)
 
-        if curentity is None:
-            raise GenderInfoNotFoundError
+    #     if curentity is None:
+    #         raise GenderInfoNotFoundError
 
-        curentity.dto2entity(info_update)
+    #     curentity.dto2entity(info_update)
 
-        session.commit()
-        session.refresh(curentity)
+    #     session.commit()
+    #     session.refresh(curentity)
 
-        return curentity
+    #     return curentity

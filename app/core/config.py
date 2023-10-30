@@ -1,18 +1,21 @@
+from pathlib import Path
+import os
+from pydantic_settings import BaseSettings, SettingsConfigDict
+from dotenv import load_dotenv, find_dotenv
 from typing import Any, Dict, Optional
 from pydantic import validator
-from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
+load_dotenv(find_dotenv(".env.dev"))
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env")
-
+    model_config = SettingsConfigDict(env_file=".env.dev", case_sensitive=True, extra="ignore")
+    mysql_user: str 
+    mysql_password: str
+    mysql_host: str 
+    mysql_port: str
+    mysql_database: str
     PROJECT_NAME: Optional[str] = "Klea iot APIs"
     API_STR: Optional[str] = "/api"
-    mysql_user: str 
-    mysql_password: str 
-    mysql_host: str = "192.168.68.111"
-    mysql_port: str = "4406"
-    mysql_database: str = "dbkleaiot"
     DATABASE_URI: Optional[str] = None
 
     @validator("DATABASE_URI", pre=True)
