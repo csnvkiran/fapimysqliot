@@ -1,11 +1,12 @@
 from sqlalchemy.orm import Session
 from app.core.database import get_db
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Query
 from app.repository.schemas import (
     IOTData,
     createIOTData,
-    CreateAndUpdateIOTData,
+    PaginatedInfo,
     IOTDataPaginatedInfo,
+    Interval,
 )
 from app.repository.models import iotSensorData
 from typing import List
@@ -34,9 +35,43 @@ async def getlookup():
 async def getlookup(session: Session = Depends(get_db)):
     entitycrud = crud_repository(iotSensorData)
     retvalue = entitycrud.get_all(session)
-    for i in retvalue:
-        logger.info(i.sensor_data)
-        logger.info(type(i.sensor_data))
+    # for i in retvalue:
+    #     logger.info(i.sensor_data)
+    #     logger.info(type(i.sensor_data))
+    return retvalue
+
+
+
+@router.get("/iotdatapaging/", response_model=IOTDataPaginatedInfo)
+async def getiotdatafilter(
+        offset: int = 0,
+        limit: int = 10,
+        descending: bool = True,
+        session: Session = Depends(get_db)
+    ):
+    entitycrud = crud_repository(iotSensorData)
+    filter = PaginatedInfo(limit=limit, offset=offset, descending=descending)
+    retdata = entitycrud.get_pagination(session, filter)
+    # for i in retvalue:
+    #     logger.info(i.sensor_data)
+    #     logger.info(type(i.sensor_data))
+    retvalue = IOTDataPaginatedInfo(limit=limit, offset=offset, data=retdata)
+    return retvalue
+
+
+
+@router.get("/iotdataintervals/", response_model=List[IOTData])
+async def getiotdatainter(
+        interval: Interval = Interval.minutes,
+        limit:int = 5,
+        session: Session = Depends(get_db)
+    ):
+    entitycrud = crud_repository(iotSensorData)
+    retdata = entitycrud.get_intervals(session, interval, limit)
+    # for i in retvalue:
+    #     logger.info(i.sensor_data)
+    #     logger.info(type(i.sensor_data))
+    retvalue = retdata
     return retvalue
 
 

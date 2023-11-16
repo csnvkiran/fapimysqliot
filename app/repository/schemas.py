@@ -6,6 +6,8 @@ from shapely import Point
 from datetime import date, datetime
 import json
 import logging
+from enum import Enum
+
 
 
 logger = logging.getLogger(__name__)
@@ -92,7 +94,7 @@ class ReadIOTData(BaseModel):
 
 # TO support list and get APIs
 class IOTData(ReadIOTData):
-    id: int
+    id: Optional[int]
 
     class Config:
         from_attributes = True
@@ -104,3 +106,21 @@ class IOTDataPaginatedInfo(BaseModel):
     limit: int
     offset: int
     data: List[IOTData]
+
+class PaginatedInfo(BaseModel):
+    class Config:
+        populate_by_name = True
+        arbitrary_types_allowed = True
+
+    limit: Optional[int]
+    offset: Optional[int]
+    descending: bool = False
+
+class Interval(str, Enum):
+    minutes = "minutes"
+    hours = "hours"
+    weeks = "weeks"
+    days = "days"
+    months = "months"
+    years = "years"
+

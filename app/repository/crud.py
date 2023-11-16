@@ -7,6 +7,14 @@ from app.core.exceptions import (
     EntityInfoNotFoundError,
     EntityInfoInfoAlreadyExistError,
 )
+from app.repository.schemas import (
+    PaginatedInfo,
+    Interval,
+)
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
+import pandas as pd 
+
 
 
 class crud_repository:
@@ -17,6 +25,44 @@ class crud_repository:
     def get_all(self, session: Session):
         # session : Session = session
         return session.query(self.entity).all()
+
+    def get_pagination(self, session: Session, filter:PaginatedInfo):
+        # session : Session = session
+        if filter.descending:
+            return  session.query(self.entity).order_by(self.entity.id.desc()).limit(filter.limit).offset(filter.offset).all()    
+        return  session.query(self.entity).order_by(self.entity.id.asc()).limit(filter.limit).offset(filter.offset).all()
+
+    def get_intervals(self, session: Session, interval: Interval, limit:int=0):
+        # session : Session = session
+        current_date = datetime.now()
+        match interval:
+            case Interval.minutes:
+                filter_date = current_date + relativedelta(minutes=-limit)
+                return  session.query(self.entity).order_by(self.entity.id.desc()).filter(self.entity.created_date >= filter_date).all()    
+
+            case Interval.hours:
+                filter_date = current_date + relativedelta(hours=-limit)
+                return  session.query(self.entity).order_by(self.entity.id.desc()).filter(self.entity.created_date >= filter_date).all()    
+
+            case Interval.days:
+                filter_date = current_date + relativedelta(days=-limit)
+                return  session.query(self.entity).order_by(self.entity.id.desc()).filter(self.entity.created_date >= filter_date).all()    
+            
+            case Interval.weeks:
+                filter_date = current_date + relativedelta(weeks=-limit)
+                return  session.query(self.entity).order_by(self.entity.id.desc()).filter(self.entity.created_date >= filter_date).all()    
+
+            case Interval.months:
+                filter_date = current_date + relativedelta(months=-limit)
+                return  session.query(self.entity).order_by(self.entity.id.desc()).filter(self.entity.created_date >= filter_date).all()    
+
+            case Interval.years:
+                filter_date = current_date + relativedelta(years=-limit)
+                return  session.query(self.entity).order_by(self.entity.id.desc()).filter(self.entity.created_date >= filter_date).all()    
+            case _:
+                filter_date = current_date + relativedelta(minutes=-5)
+                return  session.query(self.entity).order_by(self.entity.id.desc()).filter(self.entity.created_date >= filter_date).all()    
+
 
     # Function to add a new car info to the database
     def create_entity(self, session: Session, newmodel):

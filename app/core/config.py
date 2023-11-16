@@ -17,6 +17,7 @@ class Settings(BaseSettings):
     PROJECT_NAME: Optional[str] = "Klea iot APIs"
     API_STR: Optional[str] = "/api"
     DATABASE_URI: Optional[str] = None
+    cors_urls: Optional[list] = ["https://*.klea.in"]
 
     @validator("DATABASE_URI", pre=True)
     def assemble_db_connection(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
