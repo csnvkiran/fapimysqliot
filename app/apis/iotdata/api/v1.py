@@ -64,13 +64,18 @@ async def getiotdatafilter(
 async def getiotdatainter(
         interval: Interval = Interval.minutes,
         limit:int = 5,
+        fromnowon: bool = False, 
         session: Session = Depends(get_db)
     ):
     entitycrud = crud_repository(iotSensorData)
-    retdata = entitycrud.get_intervals(session, interval, limit)
+    if fromnowon:
+        retdata = entitycrud.get_intervals_from_nowon(session, interval, limit)    
+    else:   
+        retdata = entitycrud.get_intervals(session, interval, limit)
     # for i in retvalue:
     #     logger.info(i.sensor_data)
     #     logger.info(type(i.sensor_data))
+    
     retvalue = retdata
     return retvalue
 
