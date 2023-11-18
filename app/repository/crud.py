@@ -83,6 +83,7 @@ class crud_repository:
                 filter_date = current_date + relativedelta(minutes=-5)
                 return  session.query(self.entity).order_by(self.entity.id.desc()).filter(self.entity.created_date >= filter_date).all()    
 
+    #Furtion to get invervals from current datetime
     def get_intervals_from_nowon(self, session: Session, interval: Interval, limit:int=0):
         # session : Session = session
         current_datetime = datetime.now()
@@ -133,6 +134,13 @@ class crud_repository:
             case _:
                 filter_date = current_date + relativedelta(minutes=-5)
                 return  session.query(self.entity).order_by(self.entity.id.desc()).filter(self.entity.created_date >= filter_date).all()    
+
+
+    def get_usr_intervals(self, session: Session, startdate: datetime = datetime.now(), enddate: datetime = datetime.now()-relativedelta(minutes=5) ):
+        # session : Session = session
+        return session.query(self.entity).order_by(self.entity.id.desc()).filter(and_(self.entity.created_date <= enddate, self.entity.created_date >= startdate)).all()    
+
+
 
     # Function to add a new car info to the database
     def create_entity(self, session: Session, newmodel):

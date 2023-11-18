@@ -13,6 +13,8 @@ from typing import List
 from app.repository.crud import crud_repository
 import sys
 import logging
+from datetime import date, datetime, timedelta
+from dateutil.relativedelta import relativedelta
 
 
 router = APIRouter()
@@ -75,9 +77,27 @@ async def getiotdatainter(
     # for i in retvalue:
     #     logger.info(i.sensor_data)
     #     logger.info(type(i.sensor_data))
-    
+
     retvalue = retdata
     return retvalue
+
+
+
+@router.get("/iotdatacustominterval/", response_model=List[IOTData])
+async def getiotdatainter(
+        startdate: datetime = datetime.now()-relativedelta(minutes=5), 
+        enddate: datetime = datetime.today(),
+        session: Session = Depends(get_db)
+    ):
+    entitycrud = crud_repository(iotSensorData)
+    retdata = entitycrud.get_usr_intervals(session, startdate=startdate, enddate=enddate)
+    # for i in retvalue:
+    #     logger.info(i.sensor_data)
+    #     logger.info(type(i.sensor_data))
+
+    retvalue = retdata
+    return retvalue
+
 
 
 @router.post("/submitiotdata")
