@@ -10,7 +10,7 @@ import logging
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
-    # root_path="/proxy/8000",
+    root_path="/proxy/8000",
     openapi_url=f"{settings.API_STR}/openapi.json"
     # removed /vscode
 )
@@ -32,3 +32,4 @@ logging.info("starting service")
 app.include_router(apis.api_router, prefix=settings.API_STR)
 
 app.mount("/kleaiot", app)
+
