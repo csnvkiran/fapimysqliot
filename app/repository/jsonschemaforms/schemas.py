@@ -25,19 +25,8 @@ def create_jsonstr(v, values):
     return None
 
 
-# create point
-def create_point(v, values):
-    if v is not None:
-        try:
-            return Point(v)
-        except Exception as e:
-            logger.debug(f"Failed creating point: v={v} -- {e}")
-    else:
-        return None
-
-
 # TO support creation and update APIs
-class CreateAndUpdateIOTData(BaseModel):
+class CreateAndUpdateJsonForm(BaseModel):
     class Config:
         populate_by_name = True
         arbitrary_types_allowed = True
@@ -52,9 +41,6 @@ class CreateAndUpdateIOTData(BaseModel):
     _validate_json = validator("sensor_data", pre=True, always=True, allow_reuse=True)(
         create_jsonstr
     )
-    # _validate_json = validator("sensor_location", pre=True, always=True, allow_reuse=True)(
-    #     create_point
-    # )
 
 
 # Crud
@@ -65,19 +51,6 @@ class createIOTData(BaseModel):
 
     sensor_mac_id: Optional[str]
     sensor_data: Optional[Dict[str, Any]]
-
-    # created_user: Optional[str]
-    # sensor_purpose: Optional[str]
-    # sensor_location: Optional[Point]
-
-    # updated_user: Optional[str]
-
-    # _validate_json = validator("sensor_data", pre=True, always=True, allow_reuse=True)(
-    #     create_jsonstr
-    # )
-    # _validate_json = validator("sensor_location", pre=True, always=True, allow_reuse=True)(
-    #     create_point
-    # )
 
 
 # cRud
@@ -104,13 +77,6 @@ class IOTData(ReadIOTData):
         arbitrary_types_allowed = True
 
 
-# To support list cars API
-class IOTDataPaginatedInfo(BaseModel):
-    limit: int
-    offset: int
-    data: List[IOTData]
-
-
 class PaginatedInfo(BaseModel):
     class Config:
         populate_by_name = True
@@ -119,12 +85,3 @@ class PaginatedInfo(BaseModel):
     limit: Optional[int]
     offset: Optional[int]
     descending: bool = False
-
-
-class Interval(str, Enum):
-    minutes = "minutes"
-    hours = "hours"
-    weeks = "weeks"
-    days = "days"
-    months = "months"
-    years = "years"
