@@ -5,3 +5,6 @@ https://www.geeksforgeeks.org/partial-json-update-using-sqlalchemy-expression/
 
 #for feild convertion
 https://gist.github.com/la-mar/439bb675ea84a2bac308de1e35c37fa5
+
+#unit of works, repository pattern
+https://dev.to/manukanne/a-python-implementation-of-the-unit-of-work-and-repository-design-pattern-using-sqlmodel-3mb5
