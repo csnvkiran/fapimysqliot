@@ -6,12 +6,16 @@ from typing import Any, Dict, Optional
 from pydantic import validator
 
 
-load_dotenv(find_dotenv(".env.dev"))
+load_dotenv(find_dotenv(".env"))
+
+
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env.dev", case_sensitive=True, extra="ignore")
-    mysql_user: str 
+    model_config = SettingsConfigDict(
+        env_file=".env", case_sensitive=True, extra="ignore"
+    )
+    mysql_user: str
     mysql_password: str
-    mysql_host: str 
+    mysql_host: str
     mysql_port: str
     mysql_database: str
     PROJECT_NAME: Optional[str] = "Klea iot APIs"
@@ -23,6 +27,7 @@ class Settings(BaseSettings):
     def assemble_db_connection(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
         if isinstance(v, str):
             return v
+           
         return (
             f"mysql+pymysql://{values.get('mysql_user')}:{values.get('mysql_password')}@{values.get('mysql_host')}:"
             f"{values.get('mysql_port')}/{values.get('mysql_database')}"

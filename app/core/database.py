@@ -20,18 +20,18 @@ logging.info(settings.DATABASE_URI)
 # get database session
 # def get_db():
 #     """
-#     Function to generate db session
-#     :return: Session
-#     """
-#     db = None
-#     try:
-#         db = SessionLocal()
-#         yield db
-#     finally:
-#         db.close()
+# Function to generate db session
+# :return: Session
+# """
+# db = None
+# try:
+#     db = SessionLocal()
+#     yield db
+# finally:
+#     db.close()
 
 
-def create_sqlmodel_engine(settings: Settings, **kwargs):
+def create_sqlmodel_engine(settings: settings, **kwargs):
     return create_engine(settings.database_connection_str, **kwargs)
 
 

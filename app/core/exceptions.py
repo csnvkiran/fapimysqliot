@@ -1,5 +1,4 @@
-class EntityInfoException(Exception):
-    ...
+class EntityInfoException(Exception): ...
 
 
 class EntityInfoNotFoundError(EntityInfoException):
