@@ -3,7 +3,7 @@ import os
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from dotenv import load_dotenv, find_dotenv
 from typing import Any, Dict, Optional
-from pydantic import validator
+from pydantic import BaseModel, ValidationError, ValidationInfo, field_validator
 
 
 load_dotenv(find_dotenv(".env"))
@@ -23,15 +23,29 @@ class Settings(BaseSettings):
     DATABASE_URI: Optional[str] = None
     cors_urls: Optional[list] = ["https://*.klea.in"]
 
-    @validator("DATABASE_URI", pre=True)
-    def assemble_db_connection(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
+    @field_validator("DATABASE_URI") #, mode="before"
+    def passwords_match(cls, v: str, info: ValidationInfo) -> str:
+        # if "password1" in info.data and v != info.data["password1"]:
+        #     raise ValueError("passwords do not match")
+        # return v
+    
         if isinstance(v, str):
             return v
            
         return (
-            f"mysql+pymysql://{values.get('mysql_user')}:{values.get('mysql_password')}@{values.get('mysql_host')}:"
-            f"{values.get('mysql_port')}/{values.get('mysql_database')}"
+            f"mysql+pymysql://{info.data['mysql_user']}:{info.data['mysql_password']}@{info.data['mysql_host']}:"
+            f"{info.data['mysql_port']}/{info.data['mysql_database']}"
         )
+
+    # @field_validator("DATABASE_URI", mode="before") #
+    # def assemble_db_connection(cls, v: Optional[str], info: ValidationInfo, values: Dict[str, Any]) -> Any:
+    #     if isinstance(v, str):
+    #         return v
+           
+    #     return (
+    #         f"mysql+pymysql://{values['mysql_user']}:{values['mysql_password']}@{values['mysql_host']}:"
+    #         f"{values['mysql_port']}/{values['mysql_database']}"
+    #     )
 
 
 settings = Settings()

@@ -15,6 +15,7 @@ from app.repository.schemas import (
 from datetime import date, datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import pandas as pd 
+import logging
 
 
 class crud_repository:
@@ -23,7 +24,7 @@ class crud_repository:
 
     # Function to get list of car info
     def get_all(self, session: Session):
-        # session : Session = session
+         #session : Session = session
         return session.query(self.entity).all()
 
     def get_pagination(self, session: Session, filter:PaginatedInfo):
@@ -33,7 +34,8 @@ class crud_repository:
         return  session.query(self.entity).order_by(self.entity.id.asc()).limit(filter.limit).offset(filter.offset).all()
 
     def get_intervals(self, session: Session, interval: Interval, limit:int=0):
-        # session : Session = session
+        logging.debug(msg="test")
+        session : Session = session
         current_datetime = datetime.now()
         current_date = date.today()
         match interval:

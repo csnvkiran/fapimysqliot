@@ -15,17 +15,22 @@ import sys
 import logging
 from datetime import date, datetime, timedelta
 from dateutil.relativedelta import relativedelta
+from app.core.config import Settings
+
 
 
 router = APIRouter()
 
+setings = Settings()
+
 logger = logging.getLogger("{__name__}")
 logger.setLevel(logging.DEBUG)
-# session: Session = Depends(get_db)
+#session: Session = Depends(get_db)
 stdoutHandler = logging.StreamHandler(stream=sys.stdout)
 # Set the log levels on the handlers
 stdoutHandler.setLevel(logging.DEBUG)
 logger.addHandler(stdoutHandler)
+
 
 
 @router.get("/")
@@ -69,6 +74,7 @@ async def getiotdatainter(
         fromnowon: bool = False, 
         session: Session = Depends(get_db)
     ):
+    logging.info("testing")
     entitycrud = crud_repository(iotSensorData)
     if fromnowon:
         retdata = entitycrud.get_intervals_from_nowon(session, interval, limit)    

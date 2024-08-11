@@ -1,4 +1,5 @@
-fastapi
+#fastapi
+fastapi[standard]
 uvicorn[standard]
 sqlalchemy
 pydantic-settings
@@ -9,3 +10,4 @@ geoalchemy2
 shapely
 python-dateutil
 pandas
+sqlmodel

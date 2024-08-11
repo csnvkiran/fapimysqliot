@@ -1,37 +1,38 @@
-# from sqlalchemy import create_engine
-# from sqlalchemy.ext.declarative import declarative_base
-# from sqlalchemy.orm import sessionmaker
-from app.core.config import settings
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from app.core.config import Settings
 import logging
 from typing import Callable
 from sqlmodel import create_engine, Session
 
 
-logging.info(settings.DATABASE_URI)
+setings = Settings()
 
 # Declare base for model
-# Base = declarative_base()
+Base = declarative_base()
 
 # create database engine
-# engine = create_engine(settings.DATABASE_URI, pool_pre_ping=True)
-# SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-
 # get database session
-# def get_db():
-#     """
-# Function to generate db session
-# :return: Session
-# """
-# db = None
-# try:
-#     db = SessionLocal()
-#     yield db
-# finally:
-#     db.close()
+
+def get_db():
+    """
+    Function to generate db session
+    :return: Session
+    """
+    db = None
+    try:
+        logging.info(setings.DATABASE_URI)
+        engine = create_engine(setings.DATABASE_URI, pool_pre_ping=True)
+        SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+        db = SessionLocal()
+        yield db
+    finally:
+        db.close()
 
 
-def create_sqlmodel_engine(settings: settings, **kwargs):
+def create_sqlmodel_engine(settings: Settings, **kwargs):
+    logging.info(settings.DATABASE_URI)
     return create_engine(settings.database_connection_str, **kwargs)
 
 

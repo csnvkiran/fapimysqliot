@@ -2,7 +2,7 @@ from typing import Optional, List
 
 from sqlmodel import SQLModel, Field, Column, Integer, String, ForeignKey, Relationship
 
-from utilities import to_camel
+from app.core.utilities import to_camel
 
 
 class BaseModel(SQLModel):
@@ -18,5 +18,5 @@ class BaseModel(SQLModel):
 
     class Config:
         alias_generator = to_camel
-        allow_population_by_field_name = True
+        populate_by_name = True
         arbitrary_types_allowed = True

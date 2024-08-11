@@ -1,4 +1,5 @@
-from pydantic.types import BaseModel, Json, validator
+from pydantic import BaseModel, field_validator
+from pydantic.types import Json
 from typing import Optional, List
 from typing import Dict, Any
 from fastapi import Query
@@ -49,10 +50,12 @@ class CreateAndUpdateIOTData(BaseModel):
     created_user: Optional[str]
     # updated_user: Optional[str]
 
-    _validate_json = validator("sensor_data", pre=True, always=True, allow_reuse=True)(
+
+    #, always=True, allow_reuse=True
+    _validate_json = field_validator("sensor_data", mode="before")(
         create_jsonstr
     )
-    # _validate_json = validator("sensor_location", pre=True, always=True, allow_reuse=True)(
+    # _validate_json = field_validator("sensor_location", pre=True, always=True, allow_reuse=True)(
     #     create_point
     # )
 
@@ -72,10 +75,10 @@ class createIOTData(BaseModel):
 
     # updated_user: Optional[str]
 
-    # _validate_json = validator("sensor_data", pre=True, always=True, allow_reuse=True)(
+    # _validate_json = field_validator("sensor_data", pre=True, always=True, allow_reuse=True)(
     #     create_jsonstr
     # )
-    # _validate_json = validator("sensor_location", pre=True, always=True, allow_reuse=True)(
+    # _validate_json = field_validator("sensor_location", pre=True, always=True, allow_reuse=True)(
     #     create_point
     # )
 
@@ -90,7 +93,7 @@ class ReadIOTData(BaseModel):
     sensor_data: Optional[Json]
     created_date: Optional[datetime]
 
-    _validate_json = validator("sensor_data", pre=True, always=True, allow_reuse=True)(
+    _validate_json = field_validator("sensor_data", mode="before")(
         create_jsonstr
     )
 

@@ -8,3 +8,14 @@ https://gist.github.com/la-mar/439bb675ea84a2bac308de1e35c37fa5
 
 #unit of works, repository pattern
 https://dev.to/manukanne/a-python-implementation-of-the-unit-of-work-and-repository-design-pattern-using-sqlmodel-3mb5
+
+
+#cqrs 
+
+https://github.com/marcosvs98/cqrs-architecture-with-python/blob/main/src/domain/order/services/order_command.py
+
+https://medium.com/swlh/command-query-segregation-implemented-with-python-4c7a8f733c3
+
+#create handler
+https://www.youtube.com/watch?v=ZkTujRnDxSI
+

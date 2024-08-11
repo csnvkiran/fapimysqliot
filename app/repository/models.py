@@ -1,13 +1,15 @@
-from sqlalchemy.engine import base
-from sqlalchemy.schema import Column
-from sqlalchemy.types import String, Integer, Enum, DateTime
-from sqlalchemy.dialects.mysql import JSON
+#from sqlalchemy.engine import base
+#from sqlalchemy.schema import Column
+#from sqlalchemy.types import String, Integer, Enum, DateTime
+#from sqlalchemy.dialects.mysql import JSON
 from app.core.genericmodel import BaseModel
+from sqlmodel import SQLModel, Field, Column, Integer, String, ForeignKey, Relationship, JSON, DateTime
 from geoalchemy2 import Geometry
 from sqlalchemy.sql import func
 
 
-class iotSensorData(Base):
+
+class iotSensorData(BaseModel, table=True):
     __tablename__ = "iot_sensor_data"
 
     # id = Column(Integer, primary_key=True, index=True)
