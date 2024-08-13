@@ -2,13 +2,13 @@ from abc import ABC, abstractmethod
 from typing import Generic, TypeVar, Type, Optional, List
 from sqlmodel import SQLModel, Session, select, and_ 
 from sqlmodel.sql.expression import SelectOfScalar
-from genericmodel import BaseModel
+from app.core.genericmodel import BaseModel
 
 
 T = TypeVar("T", bound=BaseModel)
 
 
-class GenericRepository(Generic[T], ABC):
+class GenericRepositoryBase(Generic[T], ABC):
 
     @abstractmethod
     def get_by_id(self, id: int) -> Optional[T]:
@@ -31,7 +31,7 @@ class GenericRepository(Generic[T], ABC):
         raise NotImplementedError()
 
 
-class GenericSqlRepository(GenericRepository[T], ABC):
+class GenericRepository(GenericRepositoryBase[T], ABC):
     def __init__(self, session: Session, model_cls: Type[T]) -> None:
         self._session = session
         self._model_cls = model_cls

@@ -23,13 +23,13 @@ router = APIRouter()
 
 setings = Settings()
 
-logger = logging.getLogger("{__name__}")
-logger.setLevel(logging.DEBUG)
+logger = logging.getLogger("iotAPP") #{__name__}
+logger.setLevel(logging.INFO)
 #session: Session = Depends(get_db)
-stdoutHandler = logging.StreamHandler(stream=sys.stdout)
+#stdoutHandler = logging.StreamHandler(stream=sys.stdout)
 # Set the log levels on the handlers
-stdoutHandler.setLevel(logging.DEBUG)
-logger.addHandler(stdoutHandler)
+#stdoutHandler.setLevel(logging.INFO)
+#logger.addHandler(stdoutHandler)
 
 
 
@@ -74,7 +74,7 @@ async def getiotdatainter(
         fromnowon: bool = False, 
         session: Session = Depends(get_db)
     ):
-    logging.info("testing")
+    logger.info("testing")
     entitycrud = crud_repository(iotSensorData)
     if fromnowon:
         retdata = entitycrud.get_intervals_from_nowon(session, interval, limit)    

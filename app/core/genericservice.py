@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Generic, TypeVar, Type, Optional, List
-from genericmodel import BaseModel
+from app.core.genericmodel import BaseModel
 from app.core.genericrepository import GenericRepository
 from sqlmodel.sql.expression import SelectOfScalar
 from sqlmodel import SQLModel, Session, select, and_ 
@@ -8,7 +8,7 @@ from sqlmodel import SQLModel, Session, select, and_
 T = TypeVar("T", bound=BaseModel)
 
 
-class GenericQueryService(Generic[T], ABC):
+class GenericServiceBase(Generic[T], ABC):
 
     @abstractmethod
     def get_by_id(self, id: int) -> Optional[T]:
@@ -32,7 +32,7 @@ class GenericQueryService(Generic[T], ABC):
 
 
 
-class GenericSQLQueryService(GenericQueryService[T], ABC):
+class GenericService(GenericServiceBase[T], ABC):
     def __init__(self, repository: GenericRepository, model_cls: Type[T]) -> None:
         self._repository = repository
         self._model_cls = model_cls
