@@ -19,3 +19,9 @@ https://medium.com/swlh/command-query-segregation-implemented-with-python-4c7a8f
 #create handler
 https://www.youtube.com/watch?v=ZkTujRnDxSI
 
+#containerization
+
+https://dev.to/paurakhsharma/microservice-in-python-using-fastapi-24cc
+
+#sqlmodel
+https://sqlmodel.tiangolo.com/tutorial/

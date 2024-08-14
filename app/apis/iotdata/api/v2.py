@@ -51,10 +51,21 @@ async def getlookup(name:str):
 
 
 
-@router.get("/DatabelowID/{id}")
-async def getlookup(id:int):
+@router.get("/DataFilter/{macid}")
+async def getlist(macid:str):
     _session = session_maker()
     service =  iotSensorService(_session)
-    iotdata: iotSensorData = service.list(id <= 15)
+    iotdata: iotSensorData = service.list(sensor_mac_id=macid,id=11)[:5]
     _session.close()
     return iotdata
+
+@router.get("/DataIdRange/{fromId}/{toId}")
+async def getlist(fromId:int, toId:int):
+    _session = session_maker()
+    service =  iotSensorService(_session)
+    iotdata: iotSensorData = service.list_by_range(fromId, toId)
+    _session.close()
+    return iotdata
+
+
+#
