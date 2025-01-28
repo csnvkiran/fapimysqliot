@@ -1,12 +1,13 @@
-from sqlalchemy.engine import base
+#from sqlalchemy.engine import base
 from sqlalchemy.schema import Column
 from sqlalchemy.types import String, Integer, Enum, DateTime
 from sqlalchemy.dialects.mysql import JSON
 from app.core.database import Base
-from geoalchemy2 import Geometry
+#from geoalchemy2 import Geometry
 from sqlalchemy.sql import func
 
 
+#iotSensorData
 class iotSensorData(Base):
     __tablename__ = "iot_sensor_data"
 

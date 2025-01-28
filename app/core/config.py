@@ -3,7 +3,7 @@ import os
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from dotenv import load_dotenv, find_dotenv
 from typing import Any, Dict, Optional
-from pydantic import validator
+from pydantic import field_validator
 
 
 load_dotenv(find_dotenv(".env.dev"))
@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     DATABASE_URI: Optional[str] = None
     cors_urls: Optional[list] = ["https://*.klea.in"]
 
-    @validator("DATABASE_URI", pre=True)
+    @field_validator("DATABASE_URI", pre=True)
     def assemble_db_connection(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
         if isinstance(v, str):
             return v
